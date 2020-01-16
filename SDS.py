@@ -147,7 +147,7 @@ run_short_eq(simulation, initial_inpcrd, 5000000)
 lis=[]
 
 #set the cycle number
-num_cycle=40
+num_cycle=30
 for i in range(20,num_cycle,1):
     coming_cycle=i+1
     vertix_index=get_proj_and_rst(coming_cycle,lis)
