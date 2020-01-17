@@ -1,10 +1,10 @@
 ﻿Frontier expansion sampling (FES): a method to enhance the conformational sampling in molecular dynamics simulations
 
 
-(1) Prepare the files for simulation at first. CHARMM-GUI and tleap are encouraged to prepare simulation files. 
+Prepare the files for simulation at first. CHARMM-GUI and tleap are encouraged to prepare simulation files. 
 
 
-(2) The script could be run with Python3 with Python packages of following: 
+The script could be run with Python3 with Python packages of following: 
 Numpy, Mdtraj, Openmm (GPU version), sklearn and Scipy
 
 
