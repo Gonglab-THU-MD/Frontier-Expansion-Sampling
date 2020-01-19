@@ -5,8 +5,14 @@
 @author: Juanrong Zhang
 """
 
+#set the name of system
 system_name="open_amber"
+
+#set the number of cycle
 num_cycle=30
+
+#the list that save the number of seeds in each cycle
+lis=[]
 
 
 import numpy as np
@@ -178,8 +184,7 @@ simulation = build_system(prmtop)
 #run 10 ns eq simulation
 run_short_eq(simulation, initial_inpcrd, 5000000)
 
-#the list that save the number of seeds in each cycle
-lis=[]
+
 
 
 for i in range(num_cycle):
