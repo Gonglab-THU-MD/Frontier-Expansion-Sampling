@@ -5,6 +5,10 @@
 @author: Juanrong Zhang
 """
 
+system_name="open_amber"
+num_cycle=30
+
+
 import numpy as np
 import mdtraj as md
 
@@ -69,21 +73,21 @@ def get_proj_and_rst(coming_cycle,lis):
     
     #read coordinates, perform PCA and get projection
     coord=[]
-    ensemble = md.load_pdb('./open_amber.pdb')
+    ensemble = md.load_pdb(system_name+'.pdb')
     topology = ensemble.topology
-    ref=md.load_pdb('./open_amber.pdb',atom_indices=topology.select('name CA'))
+    ref=md.load_pdb(system_name+'.pdb',atom_indices=topology.select('name CA'))
     if coming_cycle==1:
-        dcd_bb=md.load('./eq.dcd',top='./open_amber.pdb',
+        dcd_bb=md.load('./eq.dcd',top=system_name+'.pdb',
                        atom_indices=topology.select('name CA'))
-        dcd=md.load('./eq.dcd',top='./open_amber.pdb')
+        dcd=md.load('./eq.dcd',top=system_name+'.pdb')
     else: 
         
         filennames=['./eq.dcd']+['./'+str(index_cycle+1)+'/'+str(index_seed+1)+'.dcd'  
                     for index_cycle in range(len(lis))
                     for index_seed in range(lis[index_cycle]) 
                     ]
-        dcd_bb=md.load(filennames, top='./open_amber.pdb', atom_indices=topology.select('name CA'))
-        dcd=md.load(filennames, top='./open_amber.pdb')
+        dcd_bb=md.load(filennames, top=system_name+'.pdb', atom_indices=topology.select('name CA'))
+        dcd=md.load(filennames, top=system_name'.pdb')
         
     dcd_bb=dcd_bb.superpose(reference=ref)
     coord.extend(dcd_bb.xyz)
@@ -166,18 +170,18 @@ def get_proj_and_rst(coming_cycle,lis):
 
 
 #read prmtop and inpcrd file of system
-prmtop = omma.AmberPrmtopFile('./open_amber.prmtop')
-initial_inpcrd = omma.AmberInpcrdFile('./open_amber.inpcrd')
+prmtop = omma.AmberPrmtopFile(system_name+'./prmtop')
+initial_inpcrd = omma.AmberInpcrdFile(system_name+'.inpcrd')
 
 simulation = build_system(prmtop)
 
 #run 10 ns eq simulation
 run_short_eq(simulation, initial_inpcrd, 5000000)
 
+#the list that save the number of seeds in each cycle
 lis=[]
 
-#set the cycle number
-num_cycle=30
+
 for i in range(num_cycle):
     coming_cycle=i+1
     vertix_index=get_proj_and_rst(coming_cycle,lis)
